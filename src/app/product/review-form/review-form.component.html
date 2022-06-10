@@ -1,0 +1,34 @@
+<p>review-form works!</p>
+<form (ngSubmit)="submitData()" ngNativeValidate #reviewForm="ngForm">
+    
+  
+
+
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label" >NAME</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="ENTER NAME" [(ngModel)]="rf.name"  name="name" required #name="ngModel">
+    <div id="emailhelp" class="form-text text-danger" *ngIf="name.invalid && name.dirty">please enter your name</div>
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlInput2" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="name@example.com" [(ngModel)]="rf.email" name="email" required>
+  </div>
+
+  <select class="form-select"  aria-label="Default select example" [(ngModel)]="rf.rating"  name="rating" required>
+    <option selected > Open this to select Rating </option>
+    <option  *ngFor="let rating of ratings" [value]="rating">{{rating}}</option>
+    
+   
+  </select>
+
+
+
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="rf.review" name="review" required></textarea>
+  </div>
+  <input type="submit" class="btn btn-primary" [disabled]="reviewForm.form.invalid" >
+    
+
+    
+</form>

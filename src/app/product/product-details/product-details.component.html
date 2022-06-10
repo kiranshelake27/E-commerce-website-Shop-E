@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <div *ngIf="data$ |async as product; else notFound">
+
+
+                <!-- <h1>{{product |json}}</h1> -->
+            
+            
+                <div class="col-lg-6">
+                    <div class="card " style="width: 18rem;" [class.bgcolor]="product.bgcolor" style="border:solid">
+                        <img [src]="product.img" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title" [routerLink]="['/product',product.id]">{{product.name | titlecase}}</h5>
+                            <p class="card-text" [title]="product.description">{{(product.description | slice:0.15 | uppercase)
+                                +"..."}}</p>
+                            <p class="card-text">{{product.release_date | date: "d/MMM/y"}} </p>
+                            <p class="card-text">{{product.code | dash_to_space}} </p>
+                            <p class="card-text">
+                                <app-star [rating]="product.rating"></app-star>
+                            </p>
+            
+            
+                            <p class="card-text">{{product.price | currency:"INR":true:"4.2-2"}}</p>
+                            <!-- true=symbol false= code -->
+            
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+            </div>
+            <ng-template #notFound> product are not available</ng-template>
+
+        </div>
+
+
+        <div class="col-lg-6">
+            <app-review-form></app-review-form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

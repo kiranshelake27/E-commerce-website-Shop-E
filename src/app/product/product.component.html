@@ -1,0 +1,86 @@
+<!-- filter button serach bar code start-->
+
+<div class="container mb-4">
+
+  <div class="row">
+    <div class="col-6">
+      <div class="btn-group" role="group" aria-label="Basic radio toggle button group ">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+        <label class="btn btn-outline-primary" for="btnradio1" (click)="filterproduct('all')">ALL</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio2" (click)="filterproduct('mobile')">MOBILE</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio3" (click)="filterproduct('tv')">TV</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio4" (click)="filterproduct('fridge')">FRIDGE</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio5" (click)="filterproduct('headphone')">HEADPHONE</label>
+      </div>
+    </div>
+    <div class="col-4 col-lg-3 col-md-4 col-sm-12">
+      <!--<input class="form-control" type="text" placeholder="Product name" [value]="searchBy" (input)="serachByFilter($event)">-->
+      <input class="form-control" type="text" placeholder="Product name" [(ngModel)]="searchBy">
+    </div>
+    <div class="col-2 col-lg-4 col-md-4 ">
+      <p>{{searchBy}}</p>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="loading">
+  <h1>LOADING</h1>
+
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-lg-3 col-md-4 col-sm-12 mb-3" *ngFor="let product of filterproductarray | slice:startindex:endindex">
+      <div class="card " style="width: 18rem;" [class.bgcolor]="product.bgcolor" style="border:solid"
+        [style.width.rem]="cardwidth" [style.box-shadow]="shadow" [ngStyle]="cardtextstyle">
+        <img [src]="product.img" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"[routerLink]="['/product',product.id]">{{product.name | titlecase}}</h5>
+          <p class="card-text" [title]="product.description">{{(product.description | slice:0.15 | uppercase) +"..."}}</p>
+            <p class="card-text">{{product.release_date | date: "d/MMM/y"}} </p>
+            <p class="card-text">{{product.code | dash_to_space}} </p>
+            <p class="card-text"><app-star [rating]="product.rating"(sendRating)="displayrating($event)" ></app-star></p>
+            
+          
+          <p class="card-text">{{product.price | currency:"INR":true:"4.2-2"}}</p> <!-- true=symbol false= code -->
+          <a  class="btn btn-primary"(click)="addtocart()">{{product.card}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- card close-->
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <nav aria-label="...">
+        <ul class="pagination pagination-md justify-content-center">
+
+          <li class="page-item ">
+            <a class="page-link "  (click)="changepage(1)">1</a>
+          </li>
+
+          <li  class="page-item"  >
+            <a class="page-link" (click)="changepage(2)" >2</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link"  >3</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+ 
+<!-- pagination code end -->
+
+<div class="container">
+  <button class="btn btn-primary" (click)="unsubobservable()">unsubscribe</button>
+</div>
